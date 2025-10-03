@@ -1,20 +1,32 @@
+// eslint.config.mjs
 import js from "@eslint/js";
-import globals from "globals";
 
 export default [
   js.configs.recommended,
   {
     files: ["**/*.js"],
+    ignores: ["node_modules/**"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "commonjs",
-      globals: {
-        ...globals.node,
-        ...globals.jest, // ✅ Ajout des globals Jest (test, expect, describe…)
-      },
+      sourceType: "commonjs"
     },
     rules: {
-      // tes règles perso ici si besoin
-    },
+      "no-unused-vars": "warn",
+      "no-console": "off"
+    }
   },
+  {
+    files: ["tests/**", "**/*.test.js"],
+    languageOptions: {
+      globals: {
+        test: "readonly",
+        expect: "readonly", 
+        describe: "readonly",
+        beforeAll: "readonly",
+        beforeEach: "readonly",
+        afterAll: "readonly",
+        afterEach: "readonly"
+      }
+    }
+  }
 ];
